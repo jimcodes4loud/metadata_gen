@@ -1,0 +1,40 @@
+const apiCall = (prompt) => {
+
+// increase temperature for more randomness, and variations of the output. Max tokens set at 240 characters (could be lower)
+// using keyword: as a stop sequence so that it only generates one result.
+
+    const parameters = {
+        'prompt': prompt + 'keyword:' + keyword,
+        'max_tokens': 260,
+        'temperature': 0.3,
+        'stop': '["keyword:"]'
+    };
+
+    const options = {
+        'method': 'post',
+        'contentType': 'application/json',
+        'payload': JSON.stringify(parameters),
+        'headers': {
+            Authorization: 'Bearer ' + '',
+
+        }
+    };
+
+// fetch from GPT-3 - Engines can be changed
+// worth exploring each individual engine in more detail per OpenAI documentation
+
+    const response = UrlFetchApp.fetch('https://api.openai.com/v1/engines/davinci/completions', options,);
+
+    return JSON.parse(reponse.getContentText())['choices'][0]['text'];
+}
+
+const output = apiCall(prompt):
+
+const pageTitle = output.match(/Page Title:\s*(.*)/, 1)[1];
+const metaDescription = output.match(/Meta description:\s*(.*)/, 1)[1];
+const h1 = output.match(/H1:\s*(.*)/, 1)[1];
+const h2 =output.match(/H2:\s*(.*)/, 1)[1];
+
+return [["Title", "Meta Description", "H1", "H2"], [pageTitle, metaDescription, h1, h2]]
+
+}
